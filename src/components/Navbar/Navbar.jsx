@@ -1,8 +1,37 @@
+import { Film, Heart } from "lucide-react";
+import { NavLink } from "react-router-dom";
+
 function Navbar() {
   return (
-    <nav>
-      <h2>Screena</h2>
-    </nav>
+    <header className="navbar">
+      <div className="navbar-container">
+        <NavLink to="/" className="navbar-logo">
+          <Film size={30} aria-hidden="true" />
+          <span>Screena</span>
+        </NavLink>
+
+        <nav className="navbar-links" aria-label="Main navigation">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "navbar-link active" : "navbar-link"
+            }
+          >
+            Discover
+          </NavLink>
+
+          <NavLink
+            to="/favorites"
+            className={({ isActive }) =>
+              isActive ? "navbar-link active" : "navbar-link"
+            }
+          >
+            <Heart size={18} aria-hidden="true" />
+            <span>Favorites</span>
+          </NavLink>
+        </nav>
+      </div>
+    </header>
   );
 }
 
