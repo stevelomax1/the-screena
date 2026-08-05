@@ -3,22 +3,28 @@ import { Link } from "react-router-dom";
 
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-function MovieCard({ movie }) {
-  const title = movie.title || movie.name;
-  const releaseDate = movie.release_date || movie.first_air_date;
+function MovieCard({ item, mediaType }) {
+  const title = item.title || item.name;
+  const releaseDate = item.release_date || item.first_air_date;
   const releaseYear = releaseDate ? releaseDate.slice(0, 4) : "Coming soon";
-  const rating = movie.vote_average
-    ? movie.vote_average.toFixed(1)
-    : "Not rated";
+
+  const rating =
+    typeof item.vote_average === "number"
+      ? item.vote_average.toFixed(1)
+      : "Not rated";
 
   return (
     <article className="movie-card">
-      <Link to={`/movie/${movie.id}`} className="movie-card-link">
+      <Link
+        to={`/${mediaType}/${item.id}`}
+        className="movie-card-link"
+        aria-label={`View details for ${title}`}
+      >
         <div className="movie-poster-wrapper">
-          {movie.poster_path ? (
+          {item.poster_path ? (
             <img
               className="movie-poster"
-              src={`${IMAGE_BASE_URL}${movie.poster_path}`}
+              src={`${IMAGE_BASE_URL}${item.poster_path}`}
               alt={`${title} poster`}
               loading="lazy"
             />
@@ -30,7 +36,7 @@ function MovieCard({ movie }) {
         </div>
 
         <div className="movie-card-content">
-          <h3>{title}</h3>
+          <h3 title={title}>{title}</h3>
 
           <div className="movie-card-meta">
             <span>{releaseYear}</span>

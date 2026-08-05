@@ -225,7 +225,7 @@ a {
 .content-section {
   width: min(1180px, calc(100% - 2rem));
   margin: 0 auto;
-  padding: 2rem 0 6rem;
+  padding: 2rem 0 7rem;
 }
 
 .section-heading {
@@ -248,6 +248,10 @@ a {
   color: #8f96a3;
   background: rgba(255, 255, 255, 0.04);
   text-align: center;
+
+  .media-section + .media-section {
+  margin-top: 5rem;
+}
 }
 
 /* Accessibility */
