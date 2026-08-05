@@ -7,6 +7,7 @@ import Favorites from "./pages/Favorites";
 import MovieDetails from "./pages/MovieDetails";
 import TVDetails from "./pages/TVDetails";
 import NotFound from "./pages/NotFound";
+import SearchResults from "./pages/SearchResults";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
         <Route path="/tv/:id" element={<TVDetails />} />
 
         <Route path="*" element={<NotFound />} />
+
+        <Route path="/search" element={<SearchResults />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,8 +1,10 @@
 import { Search } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -13,7 +15,7 @@ function SearchBar() {
       return;
     }
 
-    console.log("Searching for:", trimmedSearchTerm);
+    navigate(`/search?query=${encodeURIComponent(trimmedSearchTerm)}`);
   }
 
   return (

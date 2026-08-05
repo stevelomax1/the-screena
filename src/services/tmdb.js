@@ -45,3 +45,26 @@ export async function getTrendingTVShows() {
 }
 
 export default tmdbApi;
+
+export async function searchMoviesAndTVShows(searchTerm) {
+  try {
+    const response = await tmdbApi.get("/search/multi", {
+      params: {
+        query: searchTerm,
+        language: "en-US",
+        include_adult: false,
+        page: 1,
+      },
+    });
+
+    return response.data.results.filter(
+      (item) => item.media_type === "movie" || item.media_type === "tv",
+    );
+  } catch (error) {
+    console.error("Unable to search movies and TV shows:", error);
+
+    throw new Error("We could not complete your search.", {
+      cause: error,
+    });
+  }
+}
