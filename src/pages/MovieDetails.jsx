@@ -1,9 +1,10 @@
 import { ArrowLeft, CalendarDays, Clock3, Play, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getMovieDetails } from "../services/tmdb";
+import { getMovieDetails, getSimilarMovies } from "../services/tmdb";
 import { Heart } from "lucide-react";
 import { useFavorites } from "../hooks/useFavorites";
+import SimilarTitles from "../components/SimilarTitles/SimilarTitles";
 
 const BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/original";
 const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
@@ -12,6 +13,9 @@ function MovieDetails() {
   const { id } = useParams();
   const { isFavorite, toggleFavorite } = useFavorites();
   const [movie, setMovie] = useState(null);
+  const [similarMovies, setSimilarMovies] = useState([]);
+  const [areSimilarMoviesLoading, setAreSimilarMoviesLoading] = useState(true);
+  const [similarMoviesError, setSimilarMoviesError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -20,13 +24,32 @@ function MovieDetails() {
       try {
         setIsLoading(true);
         setErrorMessage("");
+        setAreSimilarMoviesLoading(true);
+        setSimilarMoviesError("");
 
-        const movieDetails = await getMovieDetails(id);
-        setMovie(movieDetails);
+        const [movieDetails, similarMovieResults] = await Promise.allSettled([
+          getMovieDetails(id),
+          getSimilarMovies(id),
+        ]);
+
+        if (movieDetails.status === "rejected") {
+          throw movieDetails.reason;
+        }
+
+        setMovie(movieDetails.value);
+
+        if (similarMovieResults.status === "fulfilled") {
+          setSimilarMovies(similarMovieResults.value);
+          setSimilarMoviesError("");
+        } else {
+          setSimilarMovies([]);
+          setSimilarMoviesError("Similar movies are currently unavailable.");
+        }
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
         setIsLoading(false);
+        setAreSimilarMoviesLoading(false);
       }
     }
 
@@ -213,6 +236,16 @@ function MovieDetails() {
           </div>
         </div>
       </section>
+      <div className="details-related-container">
+        <SimilarTitles
+          items={similarMovies}
+          mediaType="movie"
+          title="Similar movies"
+          eyebrow="You may also like"
+          isLoading={areSimilarMoviesLoading}
+          errorMessage={similarMoviesError}
+        />
+      </div>
     </main>
   );
 }

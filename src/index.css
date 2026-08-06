@@ -668,6 +668,22 @@ a {
     background-position: center top;
   }
 
+  .details-related-container {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1rem 0 7rem;
+}
+
+.similar-section {
+  margin-top: 1rem;
+}
+
+.similar-section .section-heading h2 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: -0.05em;
+}
+
   .back-link {
     margin-bottom: 2rem;
   }

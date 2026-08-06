@@ -10,7 +10,8 @@ import {
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useFavorites } from "../hooks/useFavorites";
-import { getTVDetails } from "../services/tmdb";
+import { getSimilarTVShows, getTVDetails } from "../services/tmdb";
+import SimilarTitles from "../components/SimilarTitles/SimilarTitles";
 
 const BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/original";
 const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
@@ -18,8 +19,10 @@ const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
 function TVDetails() {
   const { id } = useParams();
   const { isFavorite, toggleFavorite } = useFavorites();
-
   const [show, setShow] = useState(null);
+  const [similarShows, setSimilarShows] = useState([]);
+  const [areSimilarShowsLoading, setAreSimilarShowsLoading] = useState(true);
+  const [similarShowsError, setSimilarShowsError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -28,13 +31,32 @@ function TVDetails() {
       try {
         setIsLoading(true);
         setErrorMessage("");
+        setAreSimilarShowsLoading(true);
+        setSimilarShowsError("");
 
-        const tvDetails = await getTVDetails(id);
-        setShow(tvDetails);
+        const [tvDetails, similarTVResults] = await Promise.allSettled([
+          getTVDetails(id),
+          getSimilarTVShows(id),
+        ]);
+
+        if (tvDetails.status === "rejected") {
+          throw tvDetails.reason;
+        }
+
+        setShow(tvDetails.value);
+
+        if (similarTVResults.status === "fulfilled") {
+          setSimilarShows(similarTVResults.value);
+          setSimilarShowsError("");
+        } else {
+          setSimilarShows([]);
+          setSimilarShowsError("Similar TV shows are currently unavailable.");
+        }
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
         setIsLoading(false);
+        setAreSimilarShowsLoading(false);
       }
     }
 
@@ -95,9 +117,7 @@ function TVDetails() {
 
   const trailer = show.videos?.results?.find(
     (video) =>
-      video.site === "YouTube" &&
-      video.type === "Trailer" &&
-      video.official,
+      video.site === "YouTube" && video.type === "Trailer" && video.official,
   );
 
   const fallbackTrailer = show.videos?.results?.find(
@@ -243,6 +263,16 @@ function TVDetails() {
           </div>
         </div>
       </section>
+      <div className="details-related-container">
+        <SimilarTitles
+          items={similarShows}
+          mediaType="tv"
+          title="Similar TV shows"
+          eyebrow="Keep watching"
+          isLoading={areSimilarShowsLoading}
+          errorMessage={similarShowsError}
+        />
+      </div>
     </main>
   );
 }
