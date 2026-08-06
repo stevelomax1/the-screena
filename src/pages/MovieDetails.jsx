@@ -1,20 +1,16 @@
-import {
-  ArrowLeft,
-  CalendarDays,
-  Clock3,
-  Play,
-  Star,
-} from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock3, Play, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getMovieDetails } from "../services/tmdb";
+import { Heart } from "lucide-react";
+import { useFavorites } from "../hooks/useFavorites";
 
 const BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/original";
 const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 function MovieDetails() {
   const { id } = useParams();
-
+  const { isFavorite, toggleFavorite } = useFavorites();
   const [movie, setMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
@@ -69,6 +65,7 @@ function MovieDetails() {
     return null;
   }
 
+  const saved = isFavorite(movie.id, "movie");
   const releaseYear = movie.release_date
     ? movie.release_date.slice(0, 4)
     : "Release date unavailable";
@@ -84,9 +81,7 @@ function MovieDetails() {
 
   const trailer = movie.videos?.results?.find(
     (video) =>
-      video.site === "YouTube" &&
-      video.type === "Trailer" &&
-      video.official,
+      video.site === "YouTube" && video.type === "Trailer" && video.official,
   );
 
   const fallbackTrailer = movie.videos?.results?.find(
@@ -191,6 +186,24 @@ function MovieDetails() {
                     Watch trailer
                   </a>
                 )}
+
+                <button
+                  type="button"
+                  className={
+                    saved
+                      ? "secondary-button favorite-details-button active"
+                      : "secondary-button favorite-details-button"
+                  }
+                  onClick={() => toggleFavorite(movie, "movie")}
+                >
+                  <Heart
+                    size={19}
+                    fill={saved ? "currentColor" : "none"}
+                    aria-hidden="true"
+                  />
+
+                  {saved ? "Remove from favorites" : "Add to favorites"}
+                </button>
 
                 <Link className="secondary-button" to="/favorites">
                   View favorites

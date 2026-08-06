@@ -707,4 +707,13 @@ a {
 .show-status strong {
   color: #ffffff;
 }
+.favorite-details-button {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+}
+
+.favorite-details-button.active {
+  color: #f9a8d4;
+  border-color: rgba(244, 114, 182, 0.4);
+}
 }

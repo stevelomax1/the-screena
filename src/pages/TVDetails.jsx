@@ -1,6 +1,7 @@
 import {
   ArrowLeft,
   CalendarDays,
+  Heart,
   Layers3,
   Play,
   Star,
@@ -8,6 +9,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useFavorites } from "../hooks/useFavorites";
 import { getTVDetails } from "../services/tmdb";
 
 const BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/original";
@@ -15,6 +17,7 @@ const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 function TVDetails() {
   const { id } = useParams();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   const [show, setShow] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -69,6 +72,8 @@ function TVDetails() {
   if (!show) {
     return null;
   }
+
+  const saved = isFavorite(show.id, "tv");
 
   const firstAirYear = show.first_air_date
     ? show.first_air_date.slice(0, 4)
@@ -210,6 +215,25 @@ function TVDetails() {
                     Watch trailer
                   </a>
                 )}
+
+                <button
+                  type="button"
+                  className={
+                    saved
+                      ? "secondary-button favorite-details-button active"
+                      : "secondary-button favorite-details-button"
+                  }
+                  onClick={() => toggleFavorite(show, "tv")}
+                  aria-pressed={saved}
+                >
+                  <Heart
+                    size={19}
+                    fill={saved ? "currentColor" : "none"}
+                    aria-hidden="true"
+                  />
+
+                  {saved ? "Remove favorite" : "Add to favorites"}
+                </button>
 
                 <Link className="secondary-button" to="/favorites">
                   View favorites
