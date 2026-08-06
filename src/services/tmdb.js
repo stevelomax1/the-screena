@@ -44,6 +44,25 @@ export async function getMovieDetails(movieId) {
   }
 }
 
+export async function getTVDetails(tvId) {
+  try {
+    const response = await tmdbApi.get(`/tv/${tvId}`, {
+      params: {
+        language: "en-US",
+        append_to_response: "videos",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(`Unable to load TV show ${tvId}:`, error);
+
+    throw new Error("We could not load this TV show.", {
+      cause: error,
+    });
+  }
+}
+
 export async function getTrendingTVShows() {
   try {
     const response = await tmdbApi.get("/trending/tv/week", {

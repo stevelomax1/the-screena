@@ -699,4 +699,12 @@ a {
     width: 100%;
   }
 }
+.show-status {
+  margin: 1.25rem 0 0;
+  color: #a7adb8;
+}
+
+.show-status strong {
+  color: #ffffff;
+}
 }
