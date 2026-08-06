@@ -26,6 +26,24 @@ export async function getTrendingMovies() {
   }
 }
 
+export async function getMovieDetails(movieId) {
+  try {
+    const response = await tmdbApi.get(`/movie/${movieId}`, {
+      params: {
+        language: "en-US",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Unable to load movie details:", error);
+
+    throw new Error("We could not load movie details.", {
+      cause: error,
+    });
+  }
+}
+
 export async function getTrendingTVShows() {
   try {
     const response = await tmdbApi.get("/trending/tv/week", {
