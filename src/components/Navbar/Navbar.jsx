@@ -7,7 +7,7 @@ function Navbar() {
       <div className="navbar-container">
         <NavLink to="/" className="navbar-logo">
           <Film size={30} aria-hidden="true" />
-          <span>Screena</span>
+          <span>SCREENA</span>
         </NavLink>
 
         <nav className="navbar-links" aria-label="Main navigation">

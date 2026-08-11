@@ -1,3 +1,4 @@
+import LoadingGrid from "../Loading/LoadingGrid";
 import MovieCard from "../MovieCard/MovieCard";
 
 function SimilarTitles({
@@ -18,9 +19,7 @@ function SimilarTitles({
           </div>
         </div>
 
-        <div className="status-message">
-          <p>Loading similar titles...</p>
-        </div>
+        <LoadingGrid count={5} />
       </section>
     );
   }
@@ -42,7 +41,7 @@ function SimilarTitles({
     );
   }
 
-  if (items.length === 0) {
+  if (!items || items.length === 0) {
     return null;
   }
 

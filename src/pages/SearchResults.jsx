@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard/MovieCard";
 import { searchMoviesAndTVShows } from "../services/tmdb";
+import LoadingGrid from "../components/Loading/LoadingGrid";
 
 function SearchResults() {
   const [searchParams] = useSearchParams();
@@ -55,11 +56,7 @@ function SearchResults() {
           </div>
         )}
 
-        {isLoading && (
-          <div className="status-message">
-            <p>Searching for “{searchTerm}”...</p>
-          </div>
-        )}
+        {isLoading && <LoadingGrid count={10} />}
 
         {!isLoading && errorMessage && (
           <div className="status-message error-message" role="alert">

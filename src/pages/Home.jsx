@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import Hero from "../components/Hero/Hero";
 import MovieCard from "../components/MovieCard/MovieCard";
-import {
-  getTrendingMovies,
-  getTrendingTVShows,
-} from "../services/tmdb";
+import { getTrendingMovies, getTrendingTVShows,} from "../services/tmdb";
+import LoadingGrid from "../components/Loading/LoadingGrid";
 
 function Home() {
   const [movies, setMovies] = useState([]);
@@ -40,11 +38,7 @@ function Home() {
       <Hero />
 
       <section className="content-section">
-        {isLoading && (
-          <div className="status-message">
-            <p>Loading trending movies and TV shows...</p>
-          </div>
-        )}
+        {isLoading && <LoadingGrid count={10} />}
 
         {!isLoading && errorMessage && (
           <div className="status-message error-message" role="alert">
