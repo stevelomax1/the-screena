@@ -22,6 +22,10 @@ A responsive React application for discovering movies and TV shows using live da
 
 https://screena-alpha.vercel.app
 
+**Portfolio:**
+
+https://www.stevenlomax.com 
+
 ---
 
 ## 📖 Overview
@@ -96,51 +100,11 @@ Building Screena strengthened my understanding of:
 
 ---
 
-## 🏗 Project Structure
+## 👨‍💻 Author
 
-```text
-src
-│
-├── assets
-│
-├── components
-│   ├── Footer
-│   ├── Hero
-│   ├── Loading
-│   ├── Logo
-│   ├── MovieCard
-│   ├── Navbar
-│   ├── ScrollToTop
-│   ├── SearchBar
-│   └── SimilarTitles
-│
-├── context
-│
-├── hooks
-│
-├── pages
-│   ├── Favorites.jsx
-│   ├── Home.jsx
-│   ├── MovieDetails.jsx
-│   ├── NotFound.jsx
-│   ├── SearchResults.jsx
-│   └── TVDetails.jsx
-│
-├── services
-│   └── tmdb.js
-│
-├── App.jsx
-├── main.jsx
-└── index.css
-
-## Author
-
-Steve Lomax
-
+**Steve Lomax**  
 Front-End Developer
 
-GitHub:
-https://github.com/stevelomax1
-
-LinkedIn:
-https://linkedin.com/in/stevelomax1
+- **Portfolio:** https://www.stevenlomax.com
+- **GitHub:** https://github.com/stevelomax1
+- **LinkedIn:** https://www.linkedin.com/in/stevelomax1
