@@ -1,4 +1,4 @@
-import { Film } from "lucide-react";
+import Logo from "../Logo/Logo";
 import { Link } from "react-router-dom";
 
 function Footer() {
@@ -7,10 +7,9 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-container">
-        <Link to="/" className="footer-logo">
-          <Film size={24} aria-hidden="true" />
-          <span>Screena</span>
-        </Link>
+       <Link to="/" className="footer-logo">
+  <Logo size={30} />
+</Link>
 
         <p>
           Discover movies and television shows using data provided by TMDB.

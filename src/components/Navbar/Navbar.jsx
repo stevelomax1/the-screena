@@ -1,4 +1,5 @@
-import { Film, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
+import Logo from "../Logo/Logo";
 import { NavLink } from "react-router-dom";
 
 function Navbar() {
@@ -6,9 +7,8 @@ function Navbar() {
     <header className="navbar">
       <div className="navbar-container">
         <NavLink to="/" className="navbar-logo">
-          <Film size={30} aria-hidden="true" />
-          <span>SCREENA</span>
-        </NavLink>
+  <Logo size={38} />
+</NavLink>
 
         <nav className="navbar-links" aria-label="Main navigation">
           <NavLink

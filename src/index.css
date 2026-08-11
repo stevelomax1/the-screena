@@ -68,10 +68,6 @@ a {
   letter-spacing: -0.04em;
 }
 
-.navbar-logo svg {
-  color: #a78bfa;
-}
-
 .navbar-links {
   display: flex;
   align-items: center;
@@ -807,10 +803,6 @@ a {
   font-weight: 800;
 }
 
-.footer-logo svg {
-  color: #a78bfa;
-}
-
 .footer-container p {
   margin: 0;
 }
@@ -861,5 +853,21 @@ a {
     padding: 2rem 0;
     text-align: center;
   }
+}
+.screena-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.screena-logo svg {
+  flex-shrink: 0;
+}
+
+.screena-logo span {
+  color: #ffffff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
 }
 }
