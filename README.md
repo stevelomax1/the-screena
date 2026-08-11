@@ -1,7 +1,5 @@
 # 🎬 Screena
 
-# 🎬 Screena
-
 A responsive React application for discovering movies and TV shows using live data from The Movie Database (TMDB) API. Users can browse trending content, search thousands of titles, save favorites, and explore detailed information about movies and TV shows.
 
 ---
